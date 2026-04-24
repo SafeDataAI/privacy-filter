@@ -750,8 +750,11 @@ class MLPBlock(torch.nn.Module):
         expert_indices = experts.indices
         expert_weights = expert_weights / self.experts_per_token
         experts_per_token_eff = self.experts_per_token
-        not_running_on_cpu = t.device.type != "cpu"
-        use_triton = get_env_bool("OPF_MOE_TRITON", default=not_running_on_cpu)
+        # Triton kernels are CUDA-only; auto-enable only on CUDA devices. MPS
+        # and CPU fall back to the torch-ops path unless the user explicitly
+        # opts in via OPF_MOE_TRITON=1.
+        is_cuda_device = t.device.type == "cuda"
+        use_triton = get_env_bool("OPF_MOE_TRITON", default=is_cuda_device)
         if use_triton:
             _require_triton()
 

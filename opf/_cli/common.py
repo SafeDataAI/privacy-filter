@@ -55,8 +55,13 @@ def add_device_arg(parser: object) -> None:
     parser.add_argument(
         "--device",
         type=str,
-        default="cuda",
-        help="Device to run on",
+        default="auto",
+        help=(
+            "Device to run on. 'auto' (default) picks the best available "
+            "backend: cuda > mps (Apple Silicon) > cpu. Pass an explicit "
+            "value like 'cuda', 'mps', or 'cpu' to override or to get a "
+            "loud error when the requested backend is unavailable."
+        ),
     )
 
 
