@@ -57,10 +57,10 @@ def add_device_arg(parser: object) -> None:
         type=str,
         default="auto",
         help=(
-            "Device to run on. 'auto' (default) picks cuda if a GPU is "
-            "available, otherwise cpu. Pass 'cuda' or 'cpu' explicitly to "
-            "override or to get a loud error when the requested backend is "
-            "unavailable."
+            "Device to run on. 'auto' (default) picks the best available "
+            "backend: cuda > mps (Apple Silicon) > cpu. Pass an explicit "
+            "value like 'cuda', 'mps', or 'cpu' to override or to get a "
+            "loud error when the requested backend is unavailable."
         ),
     )
 
