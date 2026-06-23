@@ -17,6 +17,12 @@ dependencies = [
   "tiktoken",
 ]
 
+[project.optional-dependencies]
+benchmark = [
+  "datasets>=3.0",
+  "pyarrow>=15.0",
+]
+
 [project.scripts]
 opf = "opf.__main__:main"
 
