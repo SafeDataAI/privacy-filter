@@ -19,6 +19,7 @@ from .._common.constants import (
     REDACTED_OUTPUT_LABEL,
     REDACTED_OUTPUT_PLACEHOLDER,
 )
+from .._common.device import resolve_device
 from .._common.env import get_env_bool
 from .decoding import ViterbiCRFDecoder
 from .._common.label_space import resolve_label_space_from_config
@@ -215,7 +216,7 @@ def load_inference_runtime(
     if output_mode not in OUTPUT_MODES:
         raise ValueError(f"Unsupported output_mode: {output_mode!r}")
     _validate_checkpoint_dir(checkpoint)
-    device = torch.device(device_name)
+    device = resolve_device(device_name)
     checkpoint_config = _load_checkpoint_config(checkpoint)
     n_ctx = _resolve_n_ctx(checkpoint_config, n_ctx_override, device)
     encoding_name = checkpoint_config.get("encoding")

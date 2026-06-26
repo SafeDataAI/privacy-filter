@@ -16,6 +16,7 @@ import tiktoken
 from .args import parse_args
 from .._api import resolve_checkpoint_path
 from .._common.constants import SCHEMA_VERSION
+from .._common.device import resolve_device
 from .._common.label_space import (
     resolve_checkpoint_label_space,
     resolve_label_space_from_config,
@@ -588,11 +589,12 @@ def main(argv: Sequence[str] | None = None, *, prog: str | None = None) -> int:
                 progress_interval_s = parsed_interval
 
     checkpoint = resolve_checkpoint_path(args.checkpoint)
-    device = torch.device(args.device)
+    device = resolve_device(args.device)
 
-    # Default to Triton-backed MoE kernels on non-CPU devices unless callers
-    # explicitly opt out. CPU uses torch ops by default so Triton stays optional.
-    if device.type != "cpu":
+    # Default to Triton-backed MoE kernels on CUDA devices unless callers
+    # explicitly opt out. CPU and MPS use torch ops by default so Triton
+    # stays CUDA-only (the kernels don't run on Metal).
+    if device.type == "cuda":
         os.environ.setdefault("OPF_MOE_TRITON", "1")
 
     base_config = _load_checkpoint_config(checkpoint)
