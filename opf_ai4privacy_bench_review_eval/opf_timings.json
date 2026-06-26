@@ -1,0 +1,48 @@
+{
+  "config": {
+    "category_version": "v2",
+    "checkpoint": "/Users/enrue/.opf/privacy_filter",
+    "dataset": "opf_ai4privacy_bench_review_eval/opf_eval_dataset.jsonl",
+    "dataset_variant": "full",
+    "decode_mode": "viterbi",
+    "device": "mps",
+    "eval_mode": "typed",
+    "n_ctx": 128000,
+    "prediction_write_workers": 8,
+    "preprocess_workers": 1,
+    "window_batch_size": 1
+  },
+  "counts": {
+    "examples": 50,
+    "padded_window_tokens": 3841,
+    "tokens": 3841,
+    "window_tokens": 3841,
+    "windows": 50
+  },
+  "schema_version": "opf.eval.timings.v1",
+  "throughput_notes": {
+    "inference_only_formula": "tokens / (model_forward + score_stitch + decode + prediction_assembly)"
+  },
+  "throughput_tokens_per_second": {
+    "eval_total_with_write": 185.36378872842246,
+    "inference_only": 185.71651320750738,
+    "model_forward_only": 868.3848827650887
+  },
+  "timings_seconds": {
+    "decode": 0.10380650000297464,
+    "eval_core_total": 20.721415042004082,
+    "eval_total_with_write": 20.721415042004082,
+    "input_pipeline": 0.03702887223334983,
+    "metrics_accuracy": 0.0008117109828162938,
+    "metrics_finalize": 3.766699228435755e-05,
+    "metrics_prepare": 0.0013860830222256482,
+    "metrics_total": 0.10673749999841675,
+    "model_forward": 4.423153921990888,
+    "overall_wall": 21.270107958000153,
+    "prediction_assembly": 0.0006584578950423747,
+    "prediction_write": 0.0,
+    "score_stitch": 16.1544407477777,
+    "startup": 0.5485650420014281,
+    "window_stage_wall": 20.614623542001937
+  }
+}
